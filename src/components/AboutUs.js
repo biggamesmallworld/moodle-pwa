@@ -36,7 +36,7 @@ class AboutPage extends React.Component {
 				<div className="ml-auto mr-auto content-container col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
 					{Object.keys(page).length ? (
-						<div className="mt-5">
+						<div className="mt-1">
 							<div key={page.id} className="card mb-3" >
 								{/* Body */}
 								<div className="card-body">

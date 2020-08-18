@@ -188,6 +188,23 @@ a .MuiListItem-button:hover {
 	text-decoration: none;
 }
 
+@media screen and (max-width:525px) {
+	.listItem {
+		text-align: center;
+	}
+
+	.profilePicture {
+		float: none;
+	}
+
+	.playerMeta {
+		float: none;
+		max-width: 100%;
+		width: 100%;
+		margin-left: 0;
+	}
+}
+
 
 
 

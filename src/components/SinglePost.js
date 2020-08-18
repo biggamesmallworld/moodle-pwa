@@ -32,29 +32,36 @@ class SinglePost extends React.Component {
 				<NavbarDrawer />
 				<div class="ml-auto mr-auto content-container col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
-					<div className="mt-5 ">
-						{Object.keys(post).length ? (
-							<div className="mt-5 ">
-								<div key={post.id} className="card border-dark mb-3 " >
-									{/* Title */}
-									<div className="card-header">
-										<h2>{post.title.rendered}</h2>
+					{Object.keys(post).length ? (
+						<div className="mt-2 ">
+							<div key={post.id} className="card  mb-3 " >
+								{/* Title */}
+								<div className="card-header">
+									<div className="w-100 text-center mb-3">
+										<img className="postFeaturedImage m-auto" src={post.fimg_url} alt={post.title.rendered}/>
 									</div>
-									{/* Body */}
-									<div className="card-body">
-										<div className="card-text post-content">
-											{renderHTML(post.content.rendered)}
-										</div> 
-									</div>
-									{/* Footer */}
-									<div className="card-footer">
-										<Moment fromNow>{post.date}</Moment>
-									</div>
+									<h2>
+										{renderHTML(post.title.rendered)}
+									</h2>
+								</div>
+								{/* Body */}
+								<div className="card-body">
+									<div className="card-text post-content">
+										{renderHTML(post.content.rendered)}
+									</div> 
+								</div>
+								{/* Footer */}
+								<div className="card-footer">
+									<Moment fromNow>{post.date}</Moment>
 								</div>
 							</div>
-						) : ''}
-						{loading && <img src={Loader} className="loader" alt="Loader" /> }
-					</div>
+						</div>
+					) : ''}
+					{loading && 
+						<div className="loaderContainer w-100">
+							<img src={Loader} className="loader m-auto" alt="Loader" /> 
+						</div> 
+					}
 				</div>
 			</div>
 		)

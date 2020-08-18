@@ -51,7 +51,7 @@ class PlayerList extends React.Component {
 		} else if (position === 'LF') {
 			return 'Left Field';
 		} else if (position === 'RF') {
-			return 'Right Field ';
+			return 'Right Field';
 		} else if (position === 'CF') {
 			return 'Center Field';
 		} else if (position === 'C') {
