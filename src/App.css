@@ -1,0 +1,193 @@
+.navbar {
+	min-height: 90px;
+}
+
+.navbar-brand {
+	text-align: center;
+	width: 150px;
+	margin-left: calc(50vw - 75px);
+	position: absolute;
+	top: 15px;
+
+}
+
+.MuiAppBar-colorPrimary {
+	background-color: #3da8e1 !important;
+}
+
+.logo {
+	width: 80px;
+	height: auto;
+}
+.nav-item {
+	display: inline-flex;
+}
+
+.postItem {
+	width: 50rem;
+	margin-left: 30px;
+}
+
+.listItem {
+	background-color: #fff;
+	border-radius: 30px;
+	padding: 15px;
+	margin-bottom: 30px;
+	-webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
+	box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);	
+}
+
+.listItem:hover {
+	-webkit-box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.25);
+	box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.25);	
+}
+
+.read-more-wrapper {
+	display: none;
+}
+
+.post-content img {
+	max-width: 100%;
+	height: auto;
+}
+
+.loaderContainer {
+	text-align: center;
+}
+
+.loader {
+	position: relative;
+	margin: auto;
+	width: 100px;
+}
+
+.searchIcon {
+	display: inline-flex;
+	float: left;
+}
+
+.searchForm {
+	color: #8b8b8b;
+	padding: 10px;
+}
+
+.searchBar {
+	width: calc(100% - 40px);
+	margin-left: 10px;
+	display: inline-flex;
+	float: left;
+	background-color: rgba(0,0,0,0);
+	border-radius: 0;
+	border: none;
+	text-transform: uppercase;
+	line-height: 2.0;
+	border-bottom: 1px solid #8b8b8b;
+	transition: .5s all;
+}
+
+.searchBar:focus {
+	border-bottom: 1px solid #3da8e1;
+	box-shadow: 0 1px 0 0 #3da8e1;
+}
+
+.searchBar:focus {
+	outline: none;
+}
+
+.profilePicture {
+	height: 150px;
+	width: 150px;
+	overflow: hidden;
+	border-radius: 50%;
+	float: left;
+	display: inline-flex
+}
+
+.profilePicture img {
+	max-width: 150px;
+	height: auto;
+}
+
+.listItemText {
+	float:left;
+	display: inline-flex;
+}
+
+.playerMeta {
+	float: left;
+	width: calc(100% - 180px);
+	margin-left: 30px;
+}
+
+.clearDiv {
+	clear: both;
+}
+
+#multiselectContainerReact {
+	width: 80%;
+	margin-left: 10%;
+}
+
+.loginForm {
+	margin: 20px;
+}
+
+.postFeaturedImage {
+	max-width: 100%;
+}
+
+
+/* Classes for drawer shift */
+
+.content-container {
+	margin-top: 100px !important;
+	background-color: #fff;
+	border-radius: 30px;
+	padding: 30px;
+	padding-left: 30px !important;
+	padding-right: 30px !important;
+}
+
+.content-container a {
+	color: #3da8e1;
+}
+
+a .MuiListItem-button {
+	color: #444444;
+}
+
+a .MuiListItem-button:hover {
+	text-decoration: none;
+	color: #444444;
+}
+
+.MuiList-root a:hover {
+	text-decoration: none;
+}
+
+.drawerIcon {
+	margin-right: 10px;
+}
+
+/* single profile styles */
+
+.bannerImage {
+	z-index: 9;
+	max-width: 100%;
+}
+.singleProfPic {
+	border-radius: 50%;
+	margin-top: -50px;
+	z-index: 10;
+}
+
+.btn-primary {
+	color: #fff !important;
+	text-decoration: none;
+}
+
+
+
+

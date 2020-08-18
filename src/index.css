@@ -1,0 +1,137 @@
+.navbar {
+	/*background-color: #3DA6DE;*/
+	background-color: #fff;
+	min-height: 90px;
+}
+
+.navbar-brand {
+	text-align: center;
+	width: 150px;
+	margin-left: calc(50vw - 75px);
+	position: absolute;
+	top: 15px;
+
+}
+
+.logo {
+	width: 80px;
+	height: auto;
+}
+.nav-item {
+	display: inline-flex;
+}
+
+.postItem {
+	width: 50rem;
+	margin-left: 30px;
+}
+
+.listItem {
+	margin-bottom: 30px;
+}
+
+.read-more-wrapper {
+	display: none;
+}
+
+.post-content img {
+	max-width: 100%;
+	height: auto;
+}
+
+.loader {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right:0;
+	margin: auto;
+	width: 100px;
+}
+
+.searchIcon {
+	display: inline-flex;
+	float: left;
+}
+
+.searchBar {
+	width: calc(100% - 40px);
+	margin-left: 10px;
+	display: inline-flex;
+	float: left;
+	background-color: rgba(0,0,0,0);
+	border-radius: 0;
+	border: none;
+	text-transform: uppercase;
+	border-bottom: 1px solid cornflowerblue;
+	line-height: 2.0;
+}
+
+.searchBar:focus {
+	outline: none;
+}
+
+.profilePicture {
+	height: 150px;
+	width: 150px;
+	overflow: hidden;
+	border-radius: 50%;
+	float: left;
+	display: inline-flex
+}
+
+.profilePicture img {
+	max-width: 150px;
+	height: auto;
+}
+
+.listItemText {
+	float:left;
+	display: inline-flex;
+}
+
+.playerMeta {
+	float: left;
+	width: calc(100% - 180px);
+	margin-left: 30px;
+}
+
+.clearDiv {
+	clear: both;
+}
+
+#multiselectContainerReact {
+	width: 80%;
+	margin-left: 10%;
+}
+
+.loginForm {
+	margin: 20px;
+}
+
+.postFeaturedImage {
+	max-width: 100%;
+}
+
+
+/* Classes for drawer shift */
+
+.content-container {
+	margin-top: 100px !important;
+}
+
+/* single profile styles */
+
+.bannerImage {
+	z-index: 9;
+	max-width: 100%;
+}
+.singleProfPic {
+	border-radius: 50%;
+	margin-top: -50px;
+	z-index: 10;
+}
+
+
+
+
