@@ -9,7 +9,6 @@ import ClubList from "./components/ClubList";
 import AboutUs from "./components/AboutUs";
 import Login from "./components/Login";
 import Dashboard from './components/Dashboard';
-import EditProfile from './components/EditProfile';
 import SinglePlayer from './components/SinglePlayer';
 import SingleClub from './components/SingleClub';
 
@@ -18,7 +17,7 @@ import SingleClub from './components/SingleClub';
 class App extends React.Component {
 	render() {
 		return (
-			<div>
+			<div className="full-container">
 				<Router>
 					<Home path="/"/>
 					<SinglePost path="/post/:id/" />
@@ -29,7 +28,6 @@ class App extends React.Component {
 					<AboutUs path="/about/" />
 					<Login path="/login/" />
 					<Dashboard path="/dashboard/:userName" />
-					<EditProfile path="/dashboard/:userName/edit" />
 				</Router>
 			</div>
 		);

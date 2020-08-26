@@ -44,6 +44,8 @@ class Home extends React.Component {
 				return data;
 			else if (data.title.rendered.toLowerCase().includes(this.state.search.toLowerCase())){
 				return data;
+			} else {
+				return null;
 			}
 		});
 		return (

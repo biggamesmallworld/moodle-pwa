@@ -52,7 +52,11 @@ class SinglePlayer extends React.Component {
 								</div>
 							</div>
 						) : ''}
-						{loading && <img src={Loader} className="loader" alt="Loader" /> }
+						{loading && 
+							<div className="loaderContainer w-100">
+								<img src={Loader} className="loader m-auto" alt="Loader" /> 
+							</div>
+						}
 					</div>
 				</div>
 			</div>

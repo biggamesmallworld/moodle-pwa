@@ -2,6 +2,8 @@ import React from 'react';
 import NavbarDrawer from "./NavbarDrawer";
 import axios from 'axios';
 import { Link } from '@reach/router';
+import EditProfile from './EditProfile';
+import { Button } from '@material-ui/core';
 
 
 class Dashboard extends React.Component {
@@ -16,6 +18,7 @@ class Dashboard extends React.Component {
 			user_id: '',
 			user_displayName: '',
 			profileId: '',
+			showDash: false,
 		}
 	}
     
@@ -34,29 +37,7 @@ class Dashboard extends React.Component {
     }
 
 	componentDidMount() {
-        const wordPressSiteUrl = 'https://baseballjobsoverseas.com';
-        const user_name = localStorage.getItem('userName');
-		
-		console.log(localStorage.getItem('userDisplayName'));
 		this.setState({user_displayName: localStorage.getItem('userDisplayName')});
-
-        this.setState({loading:true}, () =>{
-			axios.get(`${wordPressSiteUrl}/wp-json/wp/v2/users?per_page=100`)
-				.then(res => {
-                    res.data.forEach(element => {
-                        if(element.name === user_name) {
-							this.setState({user_id: element.id});
-							console.log(element.id);
-                            localStorage.setItem('userID', this.state.user_id);
-                        }
-                    });
-					this.setState({loading:false});
-				})
-				.catch(error => this.setState({loading: false, error: error.response.data.message}) )
-		});
-
-		
-        //this.getAuthorPosts();
 	}
 
 	logOut() {
@@ -66,7 +47,7 @@ class Dashboard extends React.Component {
 
 
 	render() {
-		const { posts, loading, error } = this.state;
+		const { loading, error, showDash } = this.state;
 		
 		return (
 			<div>
@@ -75,7 +56,6 @@ class Dashboard extends React.Component {
 					{error && <div className="alert alert-danger">{error}</div>}
 					<p>You are now logged in!</p>
 					<h4>Welcome {this.state.user_displayName}!</h4>
-					{/*<p>https://baseballjobsoverseas.com/wp-json/wp/v2/posts?author={this.state.user_id}</p>*/}
 					<Link 
 						onClick={this.logOut}
 						className="btn btn-primary mb-3"
@@ -83,7 +63,17 @@ class Dashboard extends React.Component {
 					>
 						Log Out
 					</Link>
-
+					<Button 
+						onClick={() => this.setState({showDash: !showDash})}
+						variant="contained" 
+						color="secondary"
+						className="mb-3 ml-2"
+					>
+						Edit Profile
+					</Button>
+					{showDash && 
+						<EditProfile userName={this.state.user_displayName} />
+					}
 				</div>
 			</div>
 		)
