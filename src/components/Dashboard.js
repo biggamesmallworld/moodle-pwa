@@ -1,6 +1,5 @@
 import React from 'react';
 import NavbarDrawer from "./NavbarDrawer";
-import axios from 'axios';
 import { Link } from '@reach/router';
 import EditProfile from './EditProfile';
 import { Button } from '@material-ui/core';
@@ -21,20 +20,6 @@ class Dashboard extends React.Component {
 			showDash: false,
 		}
 	}
-    
-    getAuthorPosts() {
-        const wordPressSiteUrl = 'https://baseballjobsoverseas.com';
-
-        this.setState({loading:true}, () =>{
-			axios.get(`${wordPressSiteUrl}/wp-json/wp/v2/users/${this.state.user_id}`)
-				.then(res => {
-                    //console.log(this.state.user_id);
-                    console.log(res.data);
-					this.setState({loading:false, posts: res.data});
-				})
-				.catch(error => this.setState({loading: false, error: error.response.data.message}) )
-		});
-    }
 
 	componentDidMount() {
 		this.setState({user_displayName: localStorage.getItem('userDisplayName')});
@@ -47,7 +32,7 @@ class Dashboard extends React.Component {
 
 
 	render() {
-		const { loading, error, showDash } = this.state;
+		const { error, showDash } = this.state;
 		
 		return (
 			<div>

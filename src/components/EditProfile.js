@@ -15,7 +15,8 @@ class EditProfile extends React.Component {
 			postSubmitted: false,
 			title: '',
 			token: '',
-			message: ''
+			message: '',
+
 		}
 	}
 
@@ -53,10 +54,11 @@ class EditProfile extends React.Component {
 		const wordPressSiteUrl = clientConfig.siteUrl;
 		const authToken = localStorage.getItem('token');
 		const user_name = localStorage.getItem('userName');
+		const profile_id = this.state.profile.id;
 
 		// post request to update a post
 
-		axios.post(`${wordPressSiteUrl}/wp-json/bbjo/v1/profiles/${user_name}`, formData, {
+		axios.put(`${wordPressSiteUrl}/wp-json/wp/v2/players/${profile_id}`, formData, {
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${authToken}`
@@ -87,8 +89,6 @@ class EditProfile extends React.Component {
     render() {
 		const { profile, title, token, loading, postSubmitted, message } = this.state;
 
-		console.log('state', this.state);
-
         return (
             <div>
 				{!loading ? 
@@ -117,7 +117,11 @@ class EditProfile extends React.Component {
 							</div> 
 						}
 					</form>
-				: null}
+				: 
+					<div className="loaderContainer w-100">
+						<img src={Loader} className="loader m-auto" alt="Loader" /> 
+					</div> 
+				}
             </div>
         );
     }
