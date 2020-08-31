@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
 		return (
 			<div>
 				<NavbarDrawer />
-				<div className="ml-auto mr-auto content-container col-sm-12 col-md-8">
+				<div className="ml-auto mr-auto contentContainer col-sm-12 col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
 					<p>You are now logged in!</p>
 					<h4>Welcome {this.state.user_displayName}!</h4>

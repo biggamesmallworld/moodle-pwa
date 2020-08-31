@@ -29,7 +29,7 @@ class SinglePlayer extends React.Component {
 		return (
 			<div>
 				<NavbarDrawer />
-				<div className="ml-auto mr-auto content-container">
+				<div className="ml-auto mr-auto contentContainer">
 					{error && <div className="alert alert-danger">{error}</div>}
 					<div className="mt-5">
 						{Object.keys(player).length ? (

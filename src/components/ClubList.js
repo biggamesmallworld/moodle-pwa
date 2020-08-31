@@ -65,7 +65,7 @@ class ClubList extends React.Component {
 		return (
 			<div>
 				<NavbarDrawer />
-				<div className="ml-auto mr-auto content-container col-md-8">
+				<div className="ml-auto mr-auto contentContainer col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
 					{/* Search Form */}
 					<form className="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mb-4 searchForm">
@@ -73,7 +73,7 @@ class ClubList extends React.Component {
 						<input 
 							className="searchBar" 
 							type="text" 
-							placeholder="Search"
+							placeholder="Search by name or country"
 							aria-label="Search"
 							onChange={(e)=>this.searchSpace(e)}
 						/>

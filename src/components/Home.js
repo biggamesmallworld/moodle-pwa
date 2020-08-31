@@ -7,6 +7,7 @@ import renderHTML from 'react-render-html';
 import Loader from '../loader.gif';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 class Home extends React.Component {
@@ -17,7 +18,8 @@ class Home extends React.Component {
 			loading:false,
 			posts: [],
 			error: '',
-			search: ''
+			search: '',
+			page: 2,
 		}
 	}
 
@@ -37,6 +39,21 @@ class Home extends React.Component {
 				.catch(error => this.setState({loading: false, error: error.response.data.message}) )
 		});
 	}
+
+	fetchMoreData = () => {
+		const wordPressSiteUrl = 'https://baseballjobsoverseas.com';
+		console.log(this.state.page);
+
+		axios.get(`${wordPressSiteUrl}/wp-json/wp/v2/posts?page=${this.state.page}`)
+			.then(res => {
+				console.log(`${wordPressSiteUrl}/wp-json/wp/v2/posts?page=${this.state.page}`);
+				this.setState({loading:false, posts: this.state.posts.concat(res.data), page: this.state.page + 1});
+			})
+			.catch(error => this.setState({loading: false, error: error.response.data.message}));
+
+	};
+
+
 	render() {
 		const { posts, loading, error } = this.state;
 		const items = posts.filter((data)=>{
@@ -51,7 +68,7 @@ class Home extends React.Component {
 		return (
 			<div>
 				<NavbarDrawer />
-				<div className="ml-auto mr-auto content-container col-md-8">
+				<div className="ml-auto mr-auto contentContainer col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
 					{/* Search Form */}
 					<form className=" form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2  mb-4 searchForm">
@@ -64,11 +81,20 @@ class Home extends React.Component {
 							onChange={(e)=>this.searchSpace(e)}
 						/>
 					</form>
-					<div className="mt-5 ">
-						{items.length ? (
-							<div className="mt-5 ">
+					{items.length ? (
+						<div className="mt-5 ">
+							<InfiniteScroll
+								dataLength={this.state.posts.length}
+								style={{overflow: 'visible !important'}}
+								next={this.fetchMoreData}
+								hasMore={true}
+								loader={
+									<div className="loaderContainer w-100">
+										<img src={Loader} className="loader m-auto" alt="Loader" /> 
+									</div>}
+							>
 								{items.map(post => (
-										<div key={post.id} className="card border-dark mb-3" >
+										<div key={post.id} className="card listItem mb-3" >
 											{/* Title */}
 											<div className="card-header">
 												<div className="w-100 text-center mb-3">
@@ -81,7 +107,7 @@ class Home extends React.Component {
 												</h2>
 											</div>
 											{/* Body */}
-											<div className="card-body">
+											<div className="excerptContainer">
 												<div className="card-text post-content">
 													{renderHTML(post.excerpt.rendered)}
 												</div> 
@@ -93,14 +119,14 @@ class Home extends React.Component {
 											</div>
 										</div>
 								))}
-							</div>
-						) : ''}
-						{loading && 
-							<div className="loaderContainer w-100">
-								<img src={Loader} className="loader m-auto" alt="Loader" /> 
-							</div> 
-						}
-					</div>
+							</InfiniteScroll>
+						</div>
+					) : ''}
+					{loading && 
+						<div className="loaderContainer w-100">
+							<img src={Loader} className="loader m-auto" alt="Loader" /> 
+						</div> 
+					}
 				</div>
 			</div>
 		)

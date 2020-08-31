@@ -24,7 +24,7 @@ class EditProfile extends React.Component {
 
 	componentDidMount() {
 
-        const wordPressSiteUrl = clientConfig.siteUrl;
+		const wordPressSiteUrl = clientConfig.siteUrl;
 		const user_name = localStorage.getItem('userName');
 		const token = localStorage.getItem('token');
 
@@ -53,7 +53,6 @@ class EditProfile extends React.Component {
 
 		const wordPressSiteUrl = clientConfig.siteUrl;
 		const authToken = localStorage.getItem('token');
-		const user_name = localStorage.getItem('userName');
 		const profile_id = this.state.profile.id;
 
 		// post request to update a post
@@ -87,24 +86,35 @@ class EditProfile extends React.Component {
 	}
 
     render() {
-		const { profile, title, token, loading, postSubmitted, message } = this.state;
+		const { profile, loading, postSubmitted, message } = this.state;
+
 
         return (
             <div>
 				{!loading ? 
-					<form onSubmit={this.handleFormSubmit} className="mt-5" style={{maxWidth: '500px'}}>
+					<form onSubmit={this.handleFormSubmit} className="mt-5">
 						<legend className="mb-4">Edit {this.props.userName}'s Profile</legend>
 						{message ? 
 							<div className={`alert ${ postSubmitted ? 'alert-success': 'alert-danger'}`} >
 								{message}
 							</div>
 						: null}
-						<div className="form-group">
-							<label htmlFor="title">Title</label>
-							<input type="text" name="title" onChange={this.handleInputChange} className="form-control" id="title" value={title}/>
-
+						<div className="form-group w-100">
+							{Object.entries(profile).map(([key, value], index) => {
+    							return (
+									<div key={index} className="form-item">
+										<label htmlFor={key}>{key}</label>
+										<input type="text" name={key} onChange={this.handleInputChange} className="form-control" id={key} value={value}/>
+									</div>
+								)
+							})}
 						</div>
-						{/*<div className="form-group">
+						{/*
+						<div className="form-item">
+										<label htmlFor={key}>{key}</label>
+										<input type="text" name={key} onChange={this.handleInputChange} className="form-control" id={key} value={value}/>
+									</div>
+						<div className="form-group">
 							<label htmlFor="first_name">First Name</label>
 							<input type="text" name="firstName" onChange={this.handleInputChange} className="form-control" id="first_name" value={firstName}/>
 

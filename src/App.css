@@ -1,3 +1,18 @@
+.MuiPaper-root {
+	background-color: #292929 !important;
+}
+
+a .MuiListItem-button, .MuiIconButton-root {
+	color: #fff !important;
+}
+
+.MuiIconButton-root:focus {
+	background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.MuiListItem-button:hover {
+	background-color: rgba(255, 255, 255, 0.04) !important;
+}
 
 .full-container {
 	background: linear-gradient(#addef8, #ffffff);
@@ -15,6 +30,21 @@
 	position: absolute;
 	top: 15px;
 
+}
+
+.logo-container {
+	margin-left: 50%;
+	text-align: center;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	width: auto;
+	position: absolute;
+}
+
+.header-logo {
+	height: 60px;
+	margin-left: -60px;
+	text-align: center;
 }
 
 .MuiAppBar-colorPrimary {
@@ -36,8 +66,8 @@
 
 .listItem {
 	background-color: #fff;
-	border-radius: 30px;
-	padding: 15px;
+	border-radius: 30px !important;
+	padding: 15px !important;
 	margin-bottom: 30px;
 	-webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
 	-moz-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
@@ -48,6 +78,14 @@
 	-webkit-box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.25);
 	-moz-box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.25);
 	box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.25);	
+}
+
+.card-header, .card-footer {
+	background-color: rgba(104, 64, 64, 0) !important;
+}
+
+.excerptContainer {
+	padding: 20px;
 }
 
 .read-more-wrapper {
@@ -149,16 +187,29 @@
 	max-width: 100%;
 }
 
+.page-container {
+	background-color: rgba(0,0,0,0);
+	border: none !important;
+}
+
+.card-body {
+	border-radius: 30px;
+	-webkit-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);
+	box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.25);	
+	background-color: #fff;
+}
+
 
 /* Classes for drawer shift */
 
-.content-container {
-	margin-top: 100px !important;
+.contentContainer {
 	background-color: rgba(0,0,0,0);
 	border-radius: 30px;
 	padding: 30px;
 	padding-left: 30px !important;
 	padding-right: 30px !important;
+	padding-top: 100px !important;
 }
 
 .content-container a {
@@ -197,6 +248,10 @@ a .MuiListItem-button:hover {
 .btn-primary {
 	color: #fff !important;
 	text-decoration: none;
+}
+
+a.btn-secondary {
+	color: #fff;
 }
 
 @media screen and (max-width:525px) {

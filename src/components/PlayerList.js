@@ -7,6 +7,7 @@ import Loader from '../loader.gif';
 //import Select from 'react-select';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 	
 
@@ -20,6 +21,7 @@ class PlayerList extends React.Component {
 			error: '',
 			search: '',
 			value:'',
+			page: 2,
 			options: [{value: 'pitcher',label: 'Pitcher'},
 			{value: 'catcher',label:'Catcher'},
 			{value: 'first base',label:'First Base'},
@@ -32,6 +34,7 @@ class PlayerList extends React.Component {
 			{value: 'utility',label:'Utility'}],
 			//positionSelected: null
 		}
+
 	}
 
 	searchSpace=(event)=>{
@@ -95,13 +98,14 @@ class PlayerList extends React.Component {
 		}
 
 	}
-
+	
 	componentDidMount() {
 		const wordPressSiteUrl = 'https://baseballjobsoverseas.com';
 
 		this.setState(() =>{
-			axios.get(`${wordPressSiteUrl}/wp-json/wp/v2/players?per_page=30`)
+			axios.get(`${wordPressSiteUrl}/wp-json/wp/v2/players`)
 				.then(res => {
+					console.log(`${wordPressSiteUrl}/wp-json/wp/v2/players`);
 					this.setState({loading:false, players: res.data});
 				})
 				.catch(error => this.setState({loading: false, error: error.response.data.message}));
@@ -111,7 +115,20 @@ class PlayerList extends React.Component {
 
 	/*handleChange = (selectedOption) => {
 		this.setState({ positionSelected: selectedOption });
-  	};*/
+	  };*/
+	  
+	fetchMoreData = () => {
+		const wordPressSiteUrl = 'https://baseballjobsoverseas.com';
+		console.log(this.state.page);
+
+		axios.get(`${wordPressSiteUrl}/wp-json/wp/v2/players?page=${this.state.page}`)
+			.then(res => {
+				console.log(`${wordPressSiteUrl}/wp-json/wp/v2/players?page=${this.state.page}`);
+				this.setState({loading:false, players: this.state.players.concat(res.data), page: this.state.page + 1});
+			})
+			.catch(error => this.setState({loading: false, error: error.response.data.message}));
+
+	};
 	
 	render() {
 		const { players, loading, error } = this.state;
@@ -125,7 +142,7 @@ class PlayerList extends React.Component {
 		return (
 			<div>
 				<NavbarDrawer />
-				<div className="ml-auto mr-auto content-container col-md-8">
+				<div className="ml-auto mr-auto contentContainer col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
 					{/* Search Form */}
 					<form className="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2  mb-4 searchForm">
@@ -133,7 +150,7 @@ class PlayerList extends React.Component {
 						<input 
 							className="searchBar" 
 							type="text" 
-							placeholder="Search"
+							placeholder="Search by name or position"
 							aria-label="Search"
 							onChange={(e)=>this.searchSpace(e)}
 						/>
@@ -149,33 +166,44 @@ class PlayerList extends React.Component {
 					</div>*/}
 					{items.length ? (
 						<div className="mt-5 postContainer">
-							{items.map(player => (
-								<Link key={player.id} to={`/player/${player.id}`}>
-									<div className="listItem z-depth-1" >
-										{/* Profile Picture */}
-										<div className="profilePicture">
-											<img src={player.acf.profile_picture} alt={player.acf.first_name + " " + player.acf.last_name} />
+							<InfiniteScroll
+								dataLength={this.state.players.length}
+								style={{overflow: 'visible !important'}}
+								next={this.fetchMoreData}
+								hasMore={true}
+								loader={
+									<div className="loaderContainer w-100">
+										<img src={Loader} className="loader m-auto" alt="Loader" /> 
+									</div>}
+							>
+								{items.map(player => (
+									<Link key={player.id} to={`/player/${player.id}`}>
+										<div className="listItem z-depth-1" >
+											{/* Profile Picture */}
+											<div className="profilePicture">
+												<img src={player.acf.profile_picture} alt={player.acf.first_name + " " + player.acf.last_name} />
+											</div>
+											<div className="playerMeta">
+												<h3>{player.acf.first_name + " " + player.acf.last_name}</h3>
+												<h5>{renderHTML(player.title.rendered)}</h5>
+												<p>{player.acf.player_position.map((element, index) => {
+													if(index !== player.acf.player_position.length -1) {
+														return <span key={index}>{ this.extractPosition(element)}, </span>;
+													} else {
+														return <span key={index}>{this.extractPosition(element)}</span>;
+													}
+													
+												})}</p>
+											</div>
+											{/* Footer 
+											<div className="">
+												<Link to={`/players/${player.id}`} className="btn btn-primary float-right">View Profile</Link>
+											</div> */}
+											<div className="clearDiv"></div>
 										</div>
-										<div className="playerMeta">
-											<h3>{player.acf.first_name + " " + player.acf.last_name}</h3>
-											<h5>{renderHTML(player.title.rendered)}</h5>
-											<p>{player.acf.player_position.map((element, index) => {
-												if(index !== player.acf.player_position.length -1) {
-													return <span key={index}>{ this.extractPosition(element)}, </span>;
-												} else {
-													return <span key={index}>{this.extractPosition(element)}</span>;
-												}
-												
-											})}</p>
-										</div>
-										{/* Footer 
-										<div className="">
-											<Link to={`/players/${player.id}`} className="btn btn-primary float-right">View Profile</Link>
-										</div> */}
-										<div className="clearDiv"></div>
-									</div>
-								</Link>
-							))}
+									</Link>
+								))}
+							</InfiniteScroll>
 						</div>
 					) : ''}
 					{loading && 

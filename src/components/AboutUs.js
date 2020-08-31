@@ -37,7 +37,7 @@ class AboutPage extends React.Component {
 					{error && <div className="alert alert-danger">{error}</div>}
 					{Object.keys(page).length ? (
 						<div className="mt-1">
-							<div key={page.id} className="card mb-3" >
+							<div key={page.id} className="page-container mb-3" >
 								{/* Body */}
 								<div className="card-body">
 									<h3 className="text-center">{page.title.rendered}</h3>

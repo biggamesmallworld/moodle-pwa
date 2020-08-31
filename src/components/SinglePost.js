@@ -30,7 +30,7 @@ class SinglePost extends React.Component {
 		return (
 			<div>
 				<NavbarDrawer />
-				<div class="ml-auto mr-auto content-container col-md-8">
+				<div class="ml-auto mr-auto contentContainer col-md-8">
 					{error && <div className="alert alert-danger">{error}</div>}
 					{Object.keys(post).length ? (
 						<div className="mt-2 ">

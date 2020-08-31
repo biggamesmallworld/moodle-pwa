@@ -75,7 +75,7 @@ class Login extends React.Component {
 			return (
 				<div>
 					<NavbarDrawer />
-					<div className="ml-auto mr-auto content-container col-md-6">
+					<div className="ml-auto mr-auto contentContainer col-md-6">
 						<form onSubmit={this.onFormSubmit} className="loginForm" >
 							<label className="form-group">
 								Username:
