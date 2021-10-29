@@ -17,12 +17,13 @@ a .MuiListItem-button, .MuiIconButton-root {
 }
 
 .full-container {
-	background: linear-gradient(#addef8, #ffffff);
+	background: rgb(205, 214, 230);
 	min-height: 100vh;
 }
 
 .navbar {
 	min-height: 90px;
+	background-color: #A986E2;
 }
 
 .navbar-brand {
@@ -272,6 +273,18 @@ a.btn-secondary {
 		margin-left: 0;
 	}
 }
+
+
+/* moodle styles */
+
+.login-cont {
+	height: 100vh;
+}
+
+.single-course {
+	background-color: #fff;
+}
+
 
 
 

@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var clientConfig = {
-  siteUrl: 'https://www.baseballjobsoverseas.com'
+  siteUrl: 'https://moodle.develop-modular.com/moodle-3.9'
 };
 var _default = clientConfig;
 exports["default"] = _default;

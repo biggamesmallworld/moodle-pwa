@@ -1,112 +1,107 @@
-import React from 'react';
-import NavbarDrawer from "./NavbarDrawer";
+import React, { useState, useEffect} from 'react';
+import NavbarDrawer from "../old-components/NavbarDrawer";
 import axios from 'axios';
-import { Redirect } from '@reach/router';
+import { Redirect } from 'react-router-dom';
 
-class Login extends React.Component {
+function Login(props) {
 
-	constructor (props) {
-		super(props);
+	const [loginObj, setLoginObj] = useState({ 
+		username: '',
+		password: '',
+		userNiceName: '',
+		userEmail: '',
+		loggedIn: false,
+		loading: false,
+		error: '',
+		token: ''
+	});
 
-		this.state ={
-			username: '',
-			password: '',
-			userNiceName: '',
-			userEmail: '',
-			loggedIn: false,
-			loading: false,
-			error: ''
-		};
-	}
-
-	onFormSubmit = (e) => {
+	const onFormSubmit = (e) => {
 		e.preventDefault();
 
-		const siteUrl = 'https://baseballjobsoverseas.com';
+		const siteUrl = 'https://learn.au.int/moodle/';
+		const service = 'moodle_mobile_app';
+		//https://localhost/moodle/login/token.php?username=student&password=password!&service=moodle_mobile_app
 
-		const loginData = {
-			username: this.state.username,
-			password: this.state.password,
-		};
+		setLoginObj({ loading: true });
+		axios.get( `${siteUrl}/login/token.php`, {
+				params: {
+					username: loginObj.username,
+					password: loginObj.password,
+					service: service
+				}
+			})
+			.then( res => {
+				console.log(res);
+				if ( undefined === res.data.token ) {
+					setLoginObj({...loginObj, error: res.data.message, loading: false } );
+					return;
+				}
 
-		this.setState( { loading: true }, () => {
-			axios.post( `${siteUrl}/wp-json/jwt-auth/v1/token`, loginData )
-				.then( res => {
-					if ( undefined === res.data.token ) {
-						this.setState( { error: res.data.message, loading: false } );
-						return;
-					}
+				let { token } = res.data;
+				setLoginObj({...loginObj, token: token});
+				localStorage.setItem('token', token);
 
-					const { token, user_nicename, user_email, user_display_name } = res.data;
+				axios.get(`${siteUrl}/webservice/rest/server.php?wstoken=${token}&wsfunction=core_user_get_users_by_field&field=username&values[0]=${loginObj.username}&moodlewsrestformat=json`)
+					.then(res => {
+						console.log(res.data);
+						let user = res.data[0];
+						localStorage.setItem('userid', user.id);
+						setLoginObj({...loginObj, loggedIn: true, error: res.data.message, loading: false } );
 
-					console.log(res.data);
-
-					localStorage.setItem( 'token', token );
-					localStorage.setItem( 'userName', user_nicename );
-					localStorage.setItem( 'userDisplayName', user_display_name );
-					localStorage.setItem( 'userEmail', user_email);
-
-					this.setState( {
-						loading: false,
-						token: token,
-						userNiceName: user_nicename,
-						userEmail: user_email,
-						loggedIn: true
-					});
-				})
-				.catch( err => {
-
-					this.setState( { error: err.response.data.message, loading: false } );
-				} )
-		} )
+					})
+					.catch(err => {
+						setLoginObj({ ...loginObj, error: err.response.data.message, loading: false } );
+					})
+			})
+			.catch( err => {
+				setLoginObj({ ...loginObj, error: err.response.data.message, loading: false } );
+			})
 	};
 
-	handleOnChange = (event) => {
-		this.setState({[event.target.name]:event.target.value});
+	const handleOnChange = (event) => {
+		setLoginObj({...loginObj, [event.target.name]:event.target.value});
 	};
-	render() {
-		const {username, password, loggedIn, userNiceName } = this.state;
 
-		const user = userNiceName ? userNiceName : localStorage.getItem('userName');
+	const user = loginObj.userNiceName ? loginObj.userNiceName : localStorage.getItem('userName');
 
-		if( loggedIn || localStorage.getItem('token')) {
-			return <Redirect to={`/dashboard/${user}`} noThrow/>;
-		} else {
-			return (
-				<div>
-					<NavbarDrawer />
-					<div className="ml-auto mr-auto contentContainer col-md-6">
-						<form onSubmit={this.onFormSubmit} className="loginForm" >
-							<label className="form-group">
-								Username:
-								<input 
-									type='text'
-									className="form-control"
-									name="username"
-									value={username}
-									onChange={this.handleOnChange}
-								/>
-							</label>
-							<br />
-							<label className="form-group ">
-								Password:
-								<input 
-									type='password'
-									className="form-control"
-									name="password"
-									value={password}
-									onChange={this.handleOnChange}
-								/>
-								
-							</label>
-							<br />
-							<button className="btn btn-primary mb-3" type="submit">Login</button>
-						</form>
-					</div>
+	return (
+		<div className="d-flex justify-content-center align-items-center login-cont">
+			{loginObj.loggedIn || localStorage.getItem('token') ? 
+				<Redirect to={`/dashboard`} noThrow />
+			:
+				<div className="shadow rounded bg-white p-3">
+					<h4 className="w-100 text-center">Moodle 21st Cetury</h4>
+					<form onSubmit={onFormSubmit} className="loginForm" >
+						<label className="form-group">
+							Username:
+							<input 
+								type='text'
+								className="form-control"
+								name="username"
+								value={loginObj.username}
+								onChange={e => handleOnChange(e)}
+							/>
+						</label>
+						<br />
+						<label className="form-group">
+							Password:
+							<input 
+								type='password'
+								className="form-control"
+								name="password"
+								value={loginObj.password}
+								onChange={e => handleOnChange(e)}
+							/>
+							
+						</label>
+						<br />
+						<button className="btn btn-primary mb-3" type="submit">Login</button>
+					</form>
 				</div>
-			);
-		} 
-	}
+			} 
+		</div>
+	)
 }
 
 export default Login;

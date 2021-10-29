@@ -1,68 +1,59 @@
-import React from 'react';
-import NavbarDrawer from "./NavbarDrawer";
-import { Link } from '@reach/router';
-import EditProfile from './EditProfile';
-import { Button } from '@material-ui/core';
+import React, {useState, useEffect} from 'react';
+import PageWrapper from './PageWrapper';
+import axios from 'axios';
+import { Redirect, Link } from 'react-router-dom';
 
 
-class Dashboard extends React.Component {
+function Dashboard(props) {
+    const [data, setData] = useState({});
+    const [loading, setLoading] = useState(true);
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			loading:false,
-			posts: [],
-			error: '',
-            search: null,
-			user_id: '',
-			user_displayName: '',
-			profileId: '',
-			showDash: false,
-		}
-	}
+    const siteUrl = 'https://moodle.develop-modular.com/moodle-3.9';
+    const token = '96b784127c9b7107db7c0a986921ca2b';
+    const userid = localStorage.getItem('userid');
+    console.log(userid);
 
-	componentDidMount() {
-		this.setState({user_displayName: localStorage.getItem('userDisplayName')});
-	}
+    const site2Url = 'https://naimc.develop-modular.com/';
+    const token2 = '4c7bff2215de17678865f0f63d5a1404';
 
-	logOut() {
-		localStorage.setItem( 'token', '' );
-		localStorage.setItem( 'userName', '' );
-	}
-
-
-	render() {
-		const { error, showDash } = this.state;
-		
-		return (
-			<div>
-				<NavbarDrawer />
-				<div className="ml-auto mr-auto contentContainer col-sm-12 col-md-8">
-					{error && <div className="alert alert-danger">{error}</div>}
-					<p>You are now logged in!</p>
-					<h4>Welcome {this.state.user_displayName}!</h4>
-					<Link 
-						onClick={this.logOut}
-						className="btn btn-primary mb-3"
-						to='/login'
-					>
-						Log Out
-					</Link>
-					<Button 
-						onClick={() => this.setState({showDash: !showDash})}
-						variant="contained" 
-						color="secondary"
-						className="mb-3 ml-2"
-					>
-						Edit Profile
-					</Button>
-					{showDash && 
-						<EditProfile userName={this.state.user_displayName} />
-					}
-				</div>
-			</div>
-		)
-	}
+    useEffect(() => {
+        axios.get(`${siteUrl}/webservice/rest/server.php?wsfunction=core_enrol_get_users_courses&wstoken=${token}&userid=${userid}&moodlewsrestformat=json`)
+          .then(res => {
+            let courses = res.data;
+            setData({ courses: courses });
+            console.log(courses);
+            setLoading(false);
+            axios.get(`${site2Url}/webservice/pluginfile.php/54/mod_data/content/6/Annex%201%20TOM%20Hetzner.pdf?token=${token2}`)
+                .then((res2) => {
+                    console.log(res2);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        })
+      }, [userid]);
+      
+    return (
+        <PageWrapper>
+            <h2>My Courses</h2>
+            {userid ?
+                <div className="row col-md-12">
+                    {!loading && data.courses.map((course, index) => {
+                        return (
+                            <Link to={`/course/${course.id}`} key={index} className="col-md-4 p-3">
+                                <div className="single-course shadow rounded p-3">
+                                    <p>{course.fullname}</p>
+                                </div>
+                            </Link>
+                        )
+                    })}
+                </div>
+                
+            :
+                <Redirect to='/login' />
+            }
+        </PageWrapper>
+    )
 }
 
 export default Dashboard;

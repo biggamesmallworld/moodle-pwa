@@ -1,37 +1,75 @@
 import React from 'react';
-import Home from "./components/Home";
+import Home from "./old-components/Home";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Router } from "@reach/router";
-import SinglePost from "./components/SinglePost";
-import PlayerList from "./components/PlayerList";
-import ClubList from "./components/ClubList";
-import AboutUs from "./components/AboutUs";
+import {
+	BrowserRouter as Router,
+	Route, Redirect
+  } from "react-router-dom";  
+import SinglePost from "./old-components/SinglePost";
+import PlayerList from "./old-components/PlayerList";
+import ClubList from "./old-components/ClubList";
+import AboutUs from "./old-components/AboutUs";
 import Login from "./components/Login";
 import Dashboard from './components/Dashboard';
-import SinglePlayer from './components/SinglePlayer';
-import SingleClub from './components/SingleClub';
+import SinglePlayer from './old-components/SinglePlayer';
+import SingleClub from './old-components/SingleClub';
+import PageWrapper from './components/PageWrapper';
+import Course from './components/Course';
+import Module from './components/Module';
+import Account from './components/Account';
 
 
 
-class App extends React.Component {
-	render() {
-		return (
-			<div className="full-container">
-				<Router>
-					<Home path="/"/>
-					<SinglePost path="/post/:id/" />
-					<SinglePlayer path="/player/:id/" />
-					<PlayerList path="/players/" />
-					<ClubList path="/clubs/" />
-					<SingleClub path="/club/:id/" />
-					<AboutUs path="/about/" />
-					<Login path="/login/" />
-					<Dashboard path="/dashboard/:userName" />
-				</Router>
-			</div>
-		);
-	}
-}
+function App() {
+	return (
+		<div className="full-container">
+			<Router>
+				<Route
+					exact={true}
+					path='/'
+					render={() => (
+						<Dashboard />
+					)}
+				/> 
+				<Route
+					exact={true}
+					path='/login'
+					render={() => (
+						<Login/>
+					)}
+				/> 
+				<Route
+					exact={true}
+					path='/dashboard'
+					render={() => (
+						<Dashboard />
+					)}
+				/> 
+				<Route
+					exact={true}
+					path='/my-account'
+					render={() => (
+						<Account />
+					)}
+				/> 
+				<Route
+					exact={true}
+					path='/course/:id'
+					render={() => (
+						<Course />
+					)}
+				/> 
+				<Route
+					exact={true}
+					path='/course/:id/:moduleid'
+					render={() => (
+						<Module />
+					)}
+				/> 
+			</Router>
+		</div>
+	);
+} 
 
 export default App;
